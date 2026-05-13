@@ -1,5 +1,5 @@
 locals {
-  project = "tf-user-lab07"
+  project = "tf-user-lab10"
 
   vpc_id = data.aws_vpc.default.id
 
@@ -12,14 +12,14 @@ locals {
 
   instance = {
     ami                         = data.aws_ami.amazon_linux.id
-    instance_type               = "t3.micro"
+    instance_type               = var.instance_type
     name                        = "ssm_test"
     associate_public_ip_address = true
     subnet_id                   = data.aws_subnets.default.ids[0]
 
     allow_access = {
-      port        = 80
-      cidr_blocks = ["0.0.0.0/0"]
+      port        = var.service_port
+      cidr_blocks = var.cir_blocks
     }
   }
 }
