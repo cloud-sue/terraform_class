@@ -18,6 +18,6 @@ module "workload" {
   subnet_id = module.network.subnet.id
 
   iamprofile_name = module.iam.iamprofile.name
-  iamattachment = module.iam.iamattachment
+
 }
 

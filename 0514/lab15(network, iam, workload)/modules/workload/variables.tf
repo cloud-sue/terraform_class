@@ -18,8 +18,3 @@ variable "iamprofile_name" {
   type = string
 }
 
-
-variable "iamattachment" {
-  type = any
-}
-
