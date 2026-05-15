@@ -10,6 +10,10 @@ locals {
 
   }
 
+  natgw = {
+    name = "main"
+  }
+
   public_subnet = [
     {
       name                    = "pub-1"
@@ -25,5 +29,19 @@ locals {
     }
   ]
 
+  private_subnet = [
+    {
+      name                    = "pri-1"
+      cidr_block              = "10.0.3.0/24"
+      availability_zone       = "${local.region}c"
+      map_public_ip_on_launch = false
+    },
+    {
+      name                    = "pri-2"
+      cidr_block              = "10.0.4.0/24"
+      availability_zone       = "${local.region}d"
+      map_public_ip_on_launch = false
+    }
+  ]
   
 }

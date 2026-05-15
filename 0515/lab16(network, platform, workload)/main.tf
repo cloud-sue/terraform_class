@@ -10,10 +10,14 @@ module "network" {
 
 # aws에서는 -를 이름에 사용하기 때문에 규칙을 지키기 위해서 다양한 방법 활용 가능
 # terraform 문법에서는 - 가 연산자 취급이 되어 사용 불가능
-# module "platform" {
-#   source = "./modules/platform"
-#   subnet = [
-#     module.network.subnet[pub-1].id,
-#     module.network.subnet[pub-2].id,
-#   ]
-# }
+module "platform" {
+  source = "./modules/platform"
+  namespace = local.namespace
+  region    = local.region
+  vpc_id = module.network.vpc_id
+  lb_subnets = [
+    # lb라서 pub만 필요
+    module.network.subnet["pub-1"].id,
+    module.network.subnet["pub-2"].id
+  ]
+}

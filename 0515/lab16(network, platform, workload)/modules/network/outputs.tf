@@ -1,7 +1,5 @@
-output "vpc" {
-  value = {
-    id = aws_vpc.this.id
-  }
+output "vpc_id" {
+  value = aws_vpc.this.id
 }
 
 
@@ -21,6 +19,10 @@ output "subnet" {
     # pub1
     (local.public_subnet[0].name) = {id = aws_subnet.pub1.id},
     # pub2
-    (local.public_subnet[1].name) = {id = aws_subnet.pub2.id}
+    (local.public_subnet[1].name) = {id = aws_subnet.pub2.id},
+    # pri1
+    (local.private_subnet[0].name) = {id = aws_subnet.pri1.id},
+    # pri2
+    (local.private_subnet[1].name) = {id = aws_subnet.pri2.id}
   }
 }
