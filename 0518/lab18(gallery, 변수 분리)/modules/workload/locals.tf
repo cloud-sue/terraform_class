@@ -6,9 +6,9 @@ locals {
   asg = {
     name = "web"
 
-    min_size         = 2
-    max_size         = 4
-    desired_capacity = 2
+    min_size         = var.asg_min_size
+    max_size         = var.asg_max_size
+    desired_capacity = var.asg_desired_capacity
 
     vpc_zone_identifier = var.asg_vpc_zone_identifier
     target_group_arns   = var.asg_target_group_arns
@@ -40,14 +40,14 @@ locals {
         "modules/workload/templates/user_data.sh.tpl",
         {
           # userdata 43번째줄 : 실행시킬 때 필요한 환경변수 값 넣어주기
-          server_port = 8080
+          server_port = var.lt_service_port
           profile     = "dev"
         }
       )
     )
 
         allow_access = {
-      port        = 8080
+      port        = var.lt_service_port
       cidr_blocks = var.lt_allow_access_cidr_blocks
     }
   }

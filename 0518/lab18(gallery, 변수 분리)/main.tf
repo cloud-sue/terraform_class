@@ -20,6 +20,8 @@ module "platform" {
     module.network.subnet["pub-1"].id,
     module.network.subnet["pub-2"].id
   ]
+    lb_target_group_port = local.infra.lb.target_group_port
+    lb_listener_port = local.infra.lb.listener_port
 }
 
 
@@ -42,4 +44,9 @@ module "workload" {
     module.network.subnet["pub-1"].cidr_block,
     module.network.subnet["pub-2"].cidr_block
   ]
+  lt_service_port = local.infra.lt.service_port
+
+  asg_min_size = local.infra.asg.asg_min_size
+  asg_max_size = local.infra.asg.asg_max_size
+  asg_desired_capacity = local.infra.asg.asg_max_size
 }

@@ -23,20 +23,20 @@ locals {
     subnets = var.lb_subnets
 
     listener = {
-      port        = 80
+      port        = var.lb_listener_port
       protocol    = "HTTP"
       cidr_blocks = ["0.0.0.0/0"]
     }
 
     target_group = {
       # 보통 서비스의 port번호와 일치시키는 것이 관례
-      port        = 8080
+      port        = var.lb_target_group_port
       protocol    = "HTTP"
       target_type = "instance"
 
       health_check = {
         enabled             = true
-        port                = 8080
+        port                = var.lb_target_group_port
         protocol            = "HTTP"
         # main 페이지에 많이 있으면 health check하는데 트래픽 소요가 많이 되기 때문에 health_check 하는 페이지를 보통 따로 둠
         path                = "/actuator/health" 
