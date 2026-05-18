@@ -14,7 +14,7 @@ module "platform" {
   source    = "./modules/platform"
   namespace = local.namespace
   region    = local.region
-  vpc_id    = module.network.vpc_id
+  vpc_id    = module.network.vpc["main"].id
   lb_subnets = [
     # lb라서 pub만 필요
     module.network.subnet["pub-1"].id,
@@ -29,13 +29,17 @@ module "workload" {
   namespace = local.namespace
   region    = local.region
 
-  vpc_id             = module.network.vpc_id
-  instance_subnet_id = module.network.subnet["pri-1"].id
+  vpc_id = module.network.vpc["main"].id
+  asg_vpc_zone_identifier = [
+    module.network.subnet["pri-1"].id,
+    module.network.subnet["pri-2"].id
+  ]
+  asg_target_group_arns = [module.platform.lb["main"].target_group.arn]
 
-  iam_instance_profile = module.platform.iamprofile.name
-  instance_allow_access_cidr_blocks = [
+  lt_iam_instance_profile_name = module.platform.iamprofile["main"].name
+
+  lt_allow_access_cidr_blocks = [
     module.network.subnet["pub-1"].cidr_block,
     module.network.subnet["pub-2"].cidr_block
   ]
-  lb_target_group_arn = module.platform.lb.target_group.arn
 }

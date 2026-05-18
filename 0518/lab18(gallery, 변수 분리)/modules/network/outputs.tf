@@ -1,5 +1,8 @@
-output "vpc_id" {
-  value = aws_vpc.this.id
+output "vpc" {
+  value = { (local.vpc.name) = {
+    id = aws_vpc.this.id
+    }
+  }
 }
 
 
